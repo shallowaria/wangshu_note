@@ -31,8 +31,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final _globalKey = GlobalKey(); // GlobalKey全局唯一
-  final _globalKey1 = GlobalKey();
-  final _globalKey2 = GlobalKey();
+  // final _globalKey1 = GlobalKey();
+  // final _globalKey2 = GlobalKey();
 
   @override
   Widget build(BuildContext context) {

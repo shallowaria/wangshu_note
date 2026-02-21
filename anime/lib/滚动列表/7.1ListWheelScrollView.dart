@@ -44,9 +44,26 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [FlutterLogo(size: 500), FlutterLogo(size: 400)],
+      body: RotatedBox(
+        quarterTurns: 1,
+        child: ListWheelScrollView(
+          // offAxisFraction: -1.5, // 轴心偏移
+          // diameterRatio: 0.8,
+          overAndUnderCenterOpacity: 0.5,
+          // magnification: 2.5,
+          // useMagnifier: true, //无用
+          physics: FixedExtentScrollPhysics(), //精确选择
+          onSelectedItemChanged: (index) => print('selected $index'),
+          itemExtent: 100,
+          children: List.generate(10, (index) {
+            return RotatedBox(
+              quarterTurns: -1,
+              child: Container(
+                alignment: Alignment.center,
+                child: Text('$index', style: TextStyle(fontSize: 72)),
+              ),
+            );
+          }),
         ),
       ),
       floatingActionButton: FloatingActionButton(

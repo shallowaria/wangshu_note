@@ -29,14 +29,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,13 +36,27 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [FlutterLogo(size: 500), FlutterLogo(size: 400)],
-        ),
+      // ListView 接收children ListView.separated 在builder的基础上加分割线，有自己的separatorBuilder属性,其他和ListView.builder相同
+      body: ListView.separated(
+        separatorBuilder: (context, index) {
+          if (index == 0) {
+            return Divider(thickness: 4, color: Colors.red);
+          }
+          return Divider();
+        },
+        cacheExtent: 2000, // 预缓冲,默认1/3左右屏幕
+        itemCount: 88, // 不写默认无限，按需加载
+        itemBuilder: (context, index) {
+          return Container(
+            height: 100,
+            color: Colors.blue[(index % 5) * 100],
+            alignment: Alignment.center,
+            child: Text('$index'),
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: () {},
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),

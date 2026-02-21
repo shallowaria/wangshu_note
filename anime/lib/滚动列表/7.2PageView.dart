@@ -44,10 +44,16 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [FlutterLogo(size: 500), FlutterLogo(size: 400)],
-        ),
+      body: PageView(
+        // 有限整页翻页，教程页面
+        // 无限翻页请用PageView.builder
+        // pageSnapping: true,  默认
+        scrollDirection: Axis.vertical, // 竖着滑
+        children: [
+          Container(color: Colors.blue),
+          Container(color: Colors.orange),
+        ],
+        onPageChanged: (value) => print('selected $value'),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
