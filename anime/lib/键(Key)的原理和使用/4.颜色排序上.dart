@@ -29,11 +29,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  final boxes = [
+    Box(color: Colors.blue[100]!, key: UniqueKey()),
+    Box(color: Colors.blue[300]!, key: UniqueKey()),
+    Box(color: Colors.blue[500]!, key: UniqueKey()),
+    Box(color: Colors.blue[700]!, key: UniqueKey()),
+    Box(color: Colors.blue[900]!, key: UniqueKey()),
+  ];
 
-  void _incrementCounter() {
+  // 打乱顺序
+  void _shuffle() {
     setState(() {
-      _counter++;
+      boxes.shuffle();
     });
   }
 
@@ -44,19 +51,42 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text('You have pushed the button this many times:'),
-            Text('$_counter', style: TextStyle(fontSize: 100)),
-          ],
-        ),
-      ),
+      body: Center(child: Row(children: boxes)),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: _shuffle,
         tooltip: 'Increment',
         child: Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+class Box extends StatelessWidget {
+  final Color color;
+
+  const Box({super.key, required this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return Draggable(
+      feedback: Container(
+        // 跟鼠标走
+        margin: EdgeInsets.all(8.0),
+        width: 50,
+        height: 50,
+        color: color,
+      ),
+      childWhenDragging: Container(
+        // 当child被拖动时渲染
+        margin: EdgeInsets.all(8.0),
+        width: 50,
+        height: 50,
+      ),
+      child: Container(
+        margin: EdgeInsets.all(8.0),
+        width: 50,
+        height: 50,
+        color: color,
       ),
     );
   }

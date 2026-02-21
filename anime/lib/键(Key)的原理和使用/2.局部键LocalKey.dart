@@ -29,13 +29,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  final k1 = UniqueKey();
+  final k2 = UniqueKey();
 
   @override
   Widget build(BuildContext context) {
@@ -45,16 +40,21 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Center(
+        // key: ValueKey(1), // 不在同一级别，不须唯一
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('You have pushed the button this many times:'),
-            Text('$_counter', style: TextStyle(fontSize: 100)),
+            Text('Name:'),
+            TextField(key: k1), // 局部键在同一级别必须要有唯一性
+            Text(
+              'Address:',
+            ), // value key: equals ; object key : identical，即是否是新实例 ; new UniqueKey() 独一无二，强行丢掉，用于AnimatedSwitcher 或写在外面只运行一次
+            TextField(key: k2),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: () {},
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),

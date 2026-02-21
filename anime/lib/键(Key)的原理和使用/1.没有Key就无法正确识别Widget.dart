@@ -21,7 +21,6 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-  // hash map: key value pair 键值对
   final String title;
 
   @override
@@ -29,14 +28,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,15 +39,49 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('You have pushed the button this many times:'),
-            Text('$_counter', style: TextStyle(fontSize: 100)),
+            // key 作为唯一标识,让Flutter在重绘的时候能够分清组件
+            Box(color: Colors.orange, key: ValueKey(1)),
+            Box(color: Colors.blue, key: ValueKey('middle')),
+            Box(color: Colors.orange, key: ValueKey(3)),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: () {},
         tooltip: 'Increment',
         child: Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+class Box extends StatefulWidget {
+  final Color color;
+
+  const Box({super.key, required this.color});
+
+  @override
+  State<Box> createState() => _BoxState();
+}
+
+class _BoxState extends State<Box> {
+  int _count = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 100,
+      height: 100,
+      color: widget.color,
+      child: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            setState(() {
+              _count++;
+            });
+          },
+          child: Text('$_count', style: TextStyle(fontSize: 50)),
+        ),
       ),
     );
   }
